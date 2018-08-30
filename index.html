@@ -99,19 +99,33 @@
         overflow-x: hidden;
         padding-top: 20px;
       }   
+
+      #blue{
+        background-color: rgb(23, 47, 114);
+        color: blue;
+        font-size: 40px;
+        border: 5px;
+      }
+
+      #red{
+        background-color: rgb(136, 34, 20);
+        color: red;
+        font-size: 40px;
+        border: 5px;
+      }
     </style>
   </head>
   <body>
     <div class="split right">
       <div class="centered">
-        <button onclick="add_red()">red</button>
+        <button id="red" onclick="add_red()">red</button>
         <p id="red">  </p>
       </div>
     </div>
 
     <div class="split left">
       <div class="centered">
-        <button onclick="add_blue()">blue</button>
+        <button id='blue'onclick="add_blue()">blue</button>
         <p id="blue" >  </p>
       </div>
     </div>
