@@ -1,0 +1,119 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Welcome to Firebase Hosting</title>
+
+    <!-- update the version number as needed -->
+    <script defer src="/__/firebase/5.0.4/firebase-app.js"></script>
+    <!-- include only the Firebase features as you need -->
+    <script defer src="/__/firebase/5.0.4/firebase-auth.js"></script>
+    <script defer src="/__/firebase/5.0.4/firebase-database.js"></script>
+    <script defer src="/__/firebase/5.0.4/firebase-messaging.js"></script>
+    <script defer src="/__/firebase/5.0.4/firebase-storage.js"></script>
+    <!-- initialize the SDK after all desired features are loaded -->
+    <script defer src="/__/firebase/init.js"></script>
+
+    <script src="https://www.gstatic.com/firebasejs/5.0.4/firebase.js"></script>
+    <script>
+      // Initialize Firebase
+      var config = {
+        apiKey: "AIzaSyDVzBuoiXGA4yTfA4oaRl__mDt48sFC2og",
+        authDomain: "redvsbluesumya.firebaseapp.com",
+        databaseURL: "https://redvsbluesumya.firebaseio.com",
+        projectId: "redvsbluesumya",
+        storageBucket: "redvsbluesumya.appspot.com",
+        messagingSenderId: "35450516101"
+      };
+      firebase.initializeApp(config);
+      var database;
+      var blue_count;
+      var red_count;
+      var red_ref = firebase.database().ref('red_count/' + '-LDk8717Xj7sFzlbX5wL/' + 'red');
+      var blue_ref = firebase.database().ref('blue_count/' + '-LDk8L3hXnt-2ZzpNcEN/' + 'blue')
+      
+      red_ref.on('value', function(red_snapshot){
+        red_count = red_snapshot.val();
+        updateRender(red_count, blue_count);
+        document.getElementById("red").innerHTML = red_count;
+      });
+
+      blue_ref.on('value', function(blue_snapshot){
+        blue_count = blue_snapshot.val();
+        updateRender(red_count, blue_count);  
+        document.getElementById("blue").innerHTML = blue_count;
+      });
+      
+      function add_red(){
+        red_count++;
+        update_red();
+      }
+
+      function add_blue(){
+        blue_count++;
+        update_blue();
+      }
+
+      database = firebase.database();
+      function update_red(){
+        database.ref('red_count/-LDk8717Xj7sFzlbX5wL/red').set(red_count);
+      }
+
+      function update_blue(){
+        database.ref('blue_count/-LDk8L3hXnt-2ZzpNcEN/blue').set(blue_count);
+      }
+      
+      function updateRender(red_count, blue_count) {
+        var sum = red_count + blue_count;
+        document.getElementsByClassName('right')[0].style.width = (red_count / sum * 100) + "%";
+        document.getElementsByClassName('left')[0].style.width = (blue_count / sum * 100) + "%";
+      }
+      // function
+    
+    </script>
+    <style>
+      .left {
+        left: 0;
+        background-color: blue; 
+        transition: all 0.3s;
+      }
+      .right {
+        right: 0;
+        background-color: red;
+        transition: all 0.3s;
+      }
+      .centered {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        text-align: center;
+      }
+      .split {
+        height: 100%;
+        position: fixed;
+        z-index: 1;
+        top: 0;
+        overflow-x: hidden;
+        padding-top: 20px;
+      }   
+    </style>
+  </head>
+  <body>
+    <div class="split right">
+      <div class="centered">
+        <button onclick="add_red()">red</button>
+        <p id="red">  </p>
+      </div>
+    </div>
+
+    <div class="split left">
+      <div class="centered">
+        <button onclick="add_blue()">blue</button>
+        <p id="blue" >  </p>
+      </div>
+    </div>
+  </body>
+</html>
